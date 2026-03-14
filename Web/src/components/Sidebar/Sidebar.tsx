@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { Calendar } from "@/components/ui/calendar";
+import { useState, useMemo } from "react";
 import {
   Search,
   Plus,
@@ -42,11 +44,42 @@ export default function Sidebar() {
     createEntry,
   } = useJournal();
 
-  const filteredEntries = entries.filter(
-    (e) =>
-      e.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      stripHtml(e.content).toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [month, setMonth] = useState<Date>(new Date());
+  const [showCalendar, setShowCalendar] = useState<boolean>(false);
+
+  const datesWithEntries = useMemo(() => {
+    return entries.map((entry) => new Date(entry.createdAt));
+  }, [entries]);
+
+  const filteredEntries = useMemo(() => {
+    return entries.filter((e) => {
+      const entryDate = new Date(e.createdAt);
+
+      // Search query takes precedence
+      if (searchQuery) {
+        return (
+          e.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          stripHtml(e.content).toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      }
+
+      // Filter by exactly selected date
+      if (date) {
+        return (
+          entryDate.getFullYear() === date.getFullYear() &&
+          entryDate.getMonth() === date.getMonth() &&
+          entryDate.getDate() === date.getDate()
+        );
+      }
+
+      // Otherwise filter by current month
+      return (
+        entryDate.getFullYear() === month.getFullYear() &&
+        entryDate.getMonth() === month.getMonth()
+      );
+    });
+  }, [entries, searchQuery, date, month]);
 
   if (!sidebarOpen) {
     return (
@@ -114,6 +147,56 @@ export default function Sidebar() {
           New Entry
         </Button>
       </div>
+
+      <Separator className="opacity-50" />
+
+      {/* Calendar Header with Toggle */}
+      <div className="px-3 pt-3 flex items-center justify-between">
+        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider pl-1">
+          Calendar
+        </span>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setShowCalendar(!showCalendar)}
+          className="h-6 px-2 text-xs text-muted-foreground hover:text-foreground"
+        >
+          {showCalendar ? "Hide" : "Show"}
+        </Button>
+      </div>
+
+      {/* Calendar */}
+      {showCalendar && (
+        <div className="px-3 pb-3">
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+            month={month}
+            onMonthChange={setMonth}
+            className="rounded-md border-border/30 bg-card/30 p-2 pointer-events-auto mt-2"
+            modifiers={{ hasEntry: datesWithEntries }}
+            modifiersStyles={{
+              hasEntry: {
+                fontWeight: "bold",
+                textDecoration: "underline",
+                textDecorationColor: "hsl(var(--primary))",
+                textUnderlineOffset: "4px",
+              },
+            }}
+          />
+          {date && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="w-full mt-2 text-xs h-7"
+              onClick={() => setDate(undefined)}
+            >
+              Clear Date Selection
+            </Button>
+          )}
+        </div>
+      )}
 
       <Separator className="opacity-50" />
 
