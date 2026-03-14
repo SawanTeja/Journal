@@ -122,15 +122,15 @@ export default function TiptapEditor() {
   }
 
   const words = wordCount(activeEntry.content);
-  const isParchment = currentTheme === "parchment";
+  const isLightMode = ["parchment", "dawn", "matcha", "cottoncandy", "sand"].includes(currentTheme);
 
   return (
-    <div className={cn("flex-1 flex flex-col min-h-0 transition-colors duration-500", theme.bg)}>
+    <div className={cn("flex-1 flex flex-col min-h-0 min-w-0 transition-colors duration-500", theme.bg)}>
       {/* Title bar */}
       <div
         className={cn(
           "px-6 pt-6 pb-2 flex items-start justify-between gap-4",
-          isParchment ? "text-amber-950" : "text-white"
+          isLightMode ? "text-slate-900" : "text-white"
         )}
       >
         <div className="flex-1 space-y-1">
@@ -139,14 +139,14 @@ export default function TiptapEditor() {
             onChange={handleTitleChange}
             className={cn(
               "w-full bg-transparent text-3xl font-serif font-bold outline-none placeholder:text-muted-foreground/40",
-              isParchment ? "text-amber-950" : "text-white"
+              isLightMode ? "text-slate-900" : "text-white"
             )}
             placeholder="Entry title..."
           />
           <div
             className={cn(
               "flex items-center gap-3 text-sm",
-              isParchment ? "text-amber-800/70" : "text-white/50"
+              isLightMode ? "text-slate-700/70" : "text-white/50"
             )}
           >
             <span className="flex items-center gap-1">
@@ -171,8 +171,8 @@ export default function TiptapEditor() {
             onClick={() => toggleFavorite(activeEntry.id)}
             className={cn(
               "rounded-full",
-              isParchment
-                ? "text-amber-800 hover:bg-amber-200/50"
+              isLightMode
+                ? "text-slate-700 hover:bg-slate-200/50"
                 : "text-white/60 hover:text-white hover:bg-white/10"
             )}
           >
@@ -191,8 +191,8 @@ export default function TiptapEditor() {
               onClick={() => setShowOptions(!showOptions)}
               className={cn(
                 "rounded-full",
-                isParchment
-                  ? "text-amber-800 hover:bg-amber-200/50"
+                isLightMode
+                  ? "text-slate-700 hover:bg-slate-200/50"
                   : "text-white/60 hover:text-white hover:bg-white/10"
               )}
             >
@@ -221,8 +221,8 @@ export default function TiptapEditor() {
         <div
           className={cn(
             "flex-1 flex flex-col rounded-lg border overflow-hidden",
-            isParchment
-              ? "border-amber-300/50 bg-amber-100/60"
+            isLightMode
+              ? "border-slate-300/50 " + theme.editor
               : "border-white/10 " + theme.editor
           )}
         >
@@ -234,7 +234,7 @@ export default function TiptapEditor() {
             <EditorContent
               editor={editor}
               className={cn(
-                isParchment ? "text-amber-950" : "text-slate-100"
+                isLightMode ? "text-slate-900" : "text-slate-100"
               )}
             />
           </div>
@@ -244,7 +244,7 @@ export default function TiptapEditor() {
         <div
           className={cn(
             "flex items-center justify-between px-2 py-2 text-xs",
-            isParchment ? "text-amber-700/60" : "text-white/30"
+            isLightMode ? "text-slate-600/60" : "text-white/30"
           )}
         >
           <span>{activeEntry.mood} {currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1)} theme</span>

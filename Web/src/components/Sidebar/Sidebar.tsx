@@ -73,7 +73,7 @@ export default function Sidebar() {
   }
 
   return (
-    <div className="w-72 border-r border-border/50 bg-card/50 backdrop-blur-xl flex flex-col animate-slide-in-left">
+    <div className="w-72 shrink-0 border-r border-border/50 bg-card/50 backdrop-blur-xl flex flex-col animate-slide-in-left overflow-hidden">
       {/* Header */}
       <div className="p-4 space-y-4">
         <div className="flex items-center justify-between">
@@ -127,7 +127,6 @@ export default function Sidebar() {
           )}
           {filteredEntries.map((entry) => {
             const isActive = entry.id === activeEntryId;
-            const preview = stripHtml(entry.content).slice(0, 80);
             const themeData = THEMES[entry.theme as ThemeKey];
 
             return (
@@ -142,20 +141,19 @@ export default function Sidebar() {
                 )}
               >
                 <div className="flex items-start gap-2">
-                  {/* Theme dot */}
                   <div
                     className="w-2.5 h-2.5 rounded-full mt-1.5 shrink-0 ring-2 ring-offset-1 ring-offset-card"
-                    style={{ backgroundColor: themeData?.accent ?? "#94a3b8", ringColor: themeData?.accent ?? "#94a3b8" }}
+                    style={{ backgroundColor: themeData?.accent ?? "#94a3b8", "--tw-ring-color": themeData?.accent ?? "#94a3b8" } as React.CSSProperties}
                   />
 
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-sm truncate">
+                    <div className="flex items-start gap-1.5">
+                      <span className="text-sm shrink-0">
                         {entry.mood}
                       </span>
                       <h4
                         className={cn(
-                          "text-sm font-medium truncate",
+                          "text-sm font-medium leading-tight break-words",
                           isActive
                             ? "text-foreground"
                             : "text-foreground/80"
@@ -164,9 +162,6 @@ export default function Sidebar() {
                         {entry.title}
                       </h4>
                     </div>
-                    <p className="text-xs text-muted-foreground truncate mt-0.5">
-                      {preview || "Empty entry"}
-                    </p>
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-[11px] text-muted-foreground/60">
                         {relativeDate(entry.createdAt)}

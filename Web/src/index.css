@@ -260,3 +260,42 @@
   left: 50%;
   animation: float 12s ease-in-out infinite 4s;
 }
+
+
+/* ── Complex Light Theme Backgrounds ── */
+.theme-bg-dawn {
+  background-color: hsla(340, 100%, 98%, 1);
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(340, 100%, 85%, 0.8) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(30, 100%, 80%, 0.8) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(320, 100%, 85%, 0.8) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(50, 100%, 80%, 0.8) 0px, transparent 50%);
+}
+
+.theme-bg-matcha {
+  background-color: hsla(110, 50%, 98%, 1);
+  background-image: 
+    radial-gradient(at 10% 20%, hsla(80, 70%, 80%, 0.8) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, hsla(120, 60%, 85%, 0.8) 0px, transparent 50%),
+    radial-gradient(at 80% 90%, hsla(100, 70%, 80%, 0.8) 0px, transparent 50%),
+    radial-gradient(at 20% 80%, hsla(140, 60%, 85%, 0.8) 0px, transparent 50%);
+}
+
+.theme-bg-cotton {
+  background-color: hsla(210, 100%, 98%, 1);
+  background-image: 
+    radial-gradient(at 20% 20%, hsla(300, 80%, 85%, 0.5) 0px, transparent 50%),
+    radial-gradient(at 80% 20%, hsla(200, 80%, 85%, 0.5) 0px, transparent 50%),
+    radial-gradient(at 20% 80%, hsla(180, 80%, 85%, 0.5) 0px, transparent 50%),
+    radial-gradient(at 80% 80%, hsla(320, 80%, 85%, 0.5) 0px, transparent 50%);
+}
+
+.theme-bg-sand {
+  background-color: hsla(40, 100%, 98%, 1);
+  background-image: 
+    radial-gradient(at 0% 50%, hsla(40, 60%, 80%, 0.6) 0px, transparent 50%),
+    radial-gradient(at 100% 50%, hsla(20, 50%, 85%, 0.6) 0px, transparent 50%),
+    radial-gradient(at 50% 0%, hsla(50, 60%, 80%, 0.6) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, hsla(30, 60%, 85%, 0.6) 0px, transparent 50%);
+}
+

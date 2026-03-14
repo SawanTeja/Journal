@@ -58,6 +58,34 @@ export const THEMES = {
     accent: "#d97706",
     preview: "linear-gradient(135deg, #fffbeb, #fff7ed, #fefce8)",
   },
+  dawn: {
+    name: "Dawn",
+    bg: "theme-bg-dawn",
+    editor: "bg-white/40",
+    accent: "#f43f5e",
+    preview: "linear-gradient(135deg, #ffe4e6, #fce7f3, #fef3c7)",
+  },
+  matcha: {
+    name: "Matcha",
+    bg: "theme-bg-matcha",
+    editor: "bg-white/50",
+    accent: "#65a30d",
+    preview: "linear-gradient(135deg, #f7fee7, #f0fdf4, #dcfce7)",
+  },
+  cottoncandy: {
+    name: "Cotton Candy",
+    bg: "theme-bg-cotton",
+    editor: "bg-white/40",
+    accent: "#0ea5e9",
+    preview: "linear-gradient(135deg, #f0f9ff, #fdf4ff, #e0f2fe)",
+  },
+  sand: {
+    name: "Sand",
+    bg: "theme-bg-sand",
+    editor: "bg-white/50",
+    accent: "#d97706",
+    preview: "linear-gradient(135deg, #fefce8, #ffedd5, #fef08a)",
+  },
 } as const;
 
 export type ThemeKey = keyof typeof THEMES;
@@ -86,12 +114,14 @@ export function JournalProvider({ children }: { children: React.ReactNode }) {
   const [activeEntryId, setActiveEntryId] = useState<string | null>(
     mockEntries[0]?.id ?? null
   );
-  const [currentTheme, setCurrentTheme] = useState<ThemeKey>("midnight");
+  const [selectedTheme, setSelectedTheme] = useState<ThemeKey>("midnight");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
   const activeEntry =
     entries.find((e) => e.id === activeEntryId) ?? null;
+
+  const currentTheme = activeEntry ? (activeEntry.theme as ThemeKey) : selectedTheme;
 
   const createEntry = useCallback(() => {
     const newEntry: JournalEntry = {
@@ -101,13 +131,13 @@ export function JournalProvider({ children }: { children: React.ReactNode }) {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       mood: "✨",
-      theme: currentTheme,
+      theme: selectedTheme,
       tags: [],
       isFavorite: false,
     };
     setEntries((prev) => [newEntry, ...prev]);
     setActiveEntryId(newEntry.id);
-  }, [currentTheme]);
+  }, [selectedTheme]);
 
   const updateEntry = useCallback(
     (id: string, updates: Partial<JournalEntry>) => {
@@ -121,6 +151,13 @@ export function JournalProvider({ children }: { children: React.ReactNode }) {
     },
     []
   );
+
+  const setCurrentTheme = useCallback((theme: ThemeKey) => {
+    setSelectedTheme(theme);
+    if (activeEntryId) {
+      updateEntry(activeEntryId, { theme });
+    }
+  }, [activeEntryId, updateEntry]);
 
   const deleteEntry = useCallback(
     (id: string) => {

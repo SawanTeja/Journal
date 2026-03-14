@@ -68,8 +68,8 @@ export default function ThemePicker({ onClose }: ThemePickerProps) {
                         className="h-1.5 rounded-full w-3/4"
                         style={{
                           backgroundColor:
-                            key === "parchment"
-                              ? "rgba(120,53,15,0.3)"
+                            ["parchment", "dawn", "matcha", "cottoncandy", "sand"].includes(key)
+                              ? "rgba(15,23,42,0.25)"
                               : "rgba(255,255,255,0.2)",
                         }}
                       />
@@ -77,8 +77,8 @@ export default function ThemePicker({ onClose }: ThemePickerProps) {
                         className="h-1 rounded-full w-full"
                         style={{
                           backgroundColor:
-                            key === "parchment"
-                              ? "rgba(120,53,15,0.15)"
+                            ["parchment", "dawn", "matcha", "cottoncandy", "sand"].includes(key)
+                              ? "rgba(15,23,42,0.15)"
                               : "rgba(255,255,255,0.1)",
                         }}
                       />
@@ -86,8 +86,8 @@ export default function ThemePicker({ onClose }: ThemePickerProps) {
                         className="h-1 rounded-full w-5/6"
                         style={{
                           backgroundColor:
-                            key === "parchment"
-                              ? "rgba(120,53,15,0.15)"
+                            ["parchment", "dawn", "matcha", "cottoncandy", "sand"].includes(key)
+                              ? "rgba(15,23,42,0.15)"
                               : "rgba(255,255,255,0.1)",
                         }}
                       />
@@ -95,8 +95,8 @@ export default function ThemePicker({ onClose }: ThemePickerProps) {
                         className="h-1 rounded-full w-2/3"
                         style={{
                           backgroundColor:
-                            key === "parchment"
-                              ? "rgba(120,53,15,0.15)"
+                            ["parchment", "dawn", "matcha", "cottoncandy", "sand"].includes(key)
+                              ? "rgba(15,23,42,0.15)"
                               : "rgba(255,255,255,0.1)",
                         }}
                       />
